@@ -1,5 +1,6 @@
 import {BehaviorSubject, Observable} from "rxjs";
 import {Injectable} from "@angular/core";
+import {SuperBehaviourSubject, SuperBehaviourSubjectNext} from './super-behaviour-subject';
 
 export interface Todo {
   description: string;
@@ -21,7 +22,7 @@ const sampleTodos: Todo[] = [
 @Injectable({"providedIn": "root"})
 export class TodoState {
 
-  private readonly todos$ = new BehaviorSubject<Todo[]>(sampleTodos);
+  private readonly todos$ = new SuperBehaviourSubject<Todo[]>(sampleTodos);
   private readonly filter$ = new BehaviorSubject<string>('');
   private readonly updating$ = new BehaviorSubject<boolean>(false);
 
@@ -37,11 +38,7 @@ export class TodoState {
     return this.updating$.asObservable();
   }
 
-  getTodos(): Todo[] {
-    return this.todos$.getValue();
-  }
-
-  setTodos(todos: Todo[]): void {
+  setTodos(todos: SuperBehaviourSubjectNext<Todo[]>): void {
     this.todos$.next(todos);
   }
 
