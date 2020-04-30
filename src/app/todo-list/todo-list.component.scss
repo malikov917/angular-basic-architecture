@@ -1,0 +1,12 @@
+ul {
+  list-style: none;
+}
+
+li.done {
+  text-decoration: line-through;
+}
+
+.todo-item > * {
+  margin-right: 1rem;
+}
+

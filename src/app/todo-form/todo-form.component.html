@@ -1,0 +1,7 @@
+<form [formGroup]="todoForm" (submit)="submitTodo()">
+    <label for="description">
+      TODO Description
+    </label>
+    <input #input type="text" id="description" formControlName="description">
+    <button type="submit" [disabled]="!input.value">Create</button>
+</form>

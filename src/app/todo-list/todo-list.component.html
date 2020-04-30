@@ -1,0 +1,23 @@
+<app-toolbar
+  (checkAll)="checkAll()"
+  (deleteChecked)="deleteChecked()"
+  (filterTodos)="filterTodos($event)"
+  [uncheckedTodos]="(uncheckedTodos$ | async).length">
+</app-toolbar>
+
+<hr>
+
+<ul *ngIf="(todos$ | async).length > 0; else noItems">
+  <li class="todo-item" [class.done]="todo.done" *ngFor="let todo of todos$ | async">
+    <input type="checkbox" [checked]="todo.done" (change)="toggleTodo(todo)">
+    <i class="fas fa-trash" (click)="deleteTodo(todo)"></i>
+    {{ todo.description }}
+  </li>
+</ul>
+
+<ng-template #noItems>
+  <p>
+    You have nothing TODO? Don't be lazy!
+  </p>
+</ng-template>
+

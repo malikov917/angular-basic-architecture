@@ -1,0 +1,6 @@
+<h2>My TODOs ({{ uncheckedTodos }})</h2>
+<div class="toolbar">
+  <i class="fas fa-check-square fa-2x" (click)="doCheckAll()"></i>
+  <i class="fas fa-trash fa-2x" (click)="doDeleteChecked()"></i>
+  <input type="text" #input placeholder="filter TODOs" (input)="doFilterTodos(input.value)">
+</div>
