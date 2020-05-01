@@ -31,35 +31,31 @@ export class TodoFacade {
 
   createTodo(description: string) {
     const todo = { description: description, done: false };
-    const todos = this.todoState.getTodos();
-    this.todoState.setTodos(
-      [...todos, todo]
-    );
+    this.todoState.setTodos((todos) => [...todos, todo]);
   }
 
   deleteTodo(todo: Todo) {
-    const todos = this.todoState.getTodos();
-    this.todoState.setTodos(
-      [...todos.filter(x => x !== todo)]
-    );
+    this.todoState.setTodos((todos) => [...todos.filter(x => x !== todo)]);
   }
 
   toggleTodo(todo: Todo) {
-    const todos = this.todoState.getTodos();
-    todo = todos.find(x => x.description === todo.description);
-    todo.done = !todo.done;
-    this.todoState.setTodos(
-      [...todos]
+    this.todoState.setTodos((todos) => todos.map(todoItem => {
+        if (todoItem.description === todo.description) {
+          todoItem.done = !todoItem.done;
+        }
+        return todoItem;
+      })
     );
   }
 
   toggleAllTodos() {
-    const todos = this.todoState.getTodos();
-    const allDone = todos.every(todo => todo.done);
-    todos.forEach(todo => todo.done = !allDone);
-    this.todoState.setTodos(
-      [...todos]
-    );
+    this.todoState.setTodos((todos) => {
+      const isAllDone = todos.every(todo => todo.done);
+      return todos.map(todo => {
+        todo.done = !isAllDone;
+        return todo;
+      });
+    });
   }
 
   deleteAllTodos() {
@@ -68,5 +64,5 @@ export class TodoFacade {
 
   filterTodos(value: string) {
     this.todoState.setFilter(value);
-  };
+  }
 }
